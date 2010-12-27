@@ -5,6 +5,7 @@
 import os
 import sys
 
+
 # Ensure this example can be used when pygtk2exe is not installed on the system
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', 'lib')))
 

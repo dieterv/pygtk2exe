@@ -4,6 +4,8 @@
   Either hardcode such dependencies in pygtk2exe or figure out if it's possible
   to make those implicit or delay load dependencies instead...
 
+* Add proper .exe.manifest files to the examples (or investigate if py2exe can generate one...)
+
 * Auto-detection of the gtk+ runtime location from PATH could use some improvements:
     > use distutils.spanw.find_executable() ?
     > ???

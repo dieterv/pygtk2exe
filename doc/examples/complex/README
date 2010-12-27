@@ -1,6 +1,6 @@
 This is a complex example that shows how you can build an application suite
-that consists of two WindowsApplication targets (bar.exe and foo.exe) and a
-ConsoleApplication target (cli.exe) that uses a Python c Extension (_cli.pyd).
+that consists of two Windows targets (bar.exe and foo.exe) and a Console
+target (cli.exe) that uses a Python c Extension (_cli.pyd).
 
 To get this example working, you'll either need to:
     - run this example from a working msys bash console (this is the default)

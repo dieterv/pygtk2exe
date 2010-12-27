@@ -1,0 +1,4 @@
+This is a simple example that shows how you can build an application suite
+that consists of single Windows targets
+
+To get this example working, simply execute setup.py.

@@ -1,0 +1,9 @@
+.project
+.pydevproject
+.settings
+
+*.pyc
+*.pyo
+
+doc/examples/complex/build
+doc/examples/complex/dist

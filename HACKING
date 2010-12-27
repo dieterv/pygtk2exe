@@ -1,0 +1,4 @@
+pygtk2exe is a package that sits on top of py2exe. Due to how both py2exe and
+distutils are written, pygtk2exe's code is a bit fragile. Pay great attention to
+the order in which things are imported, especially in the lib/pygtk2exe/__init__.py
+file!

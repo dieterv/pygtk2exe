@@ -1,0 +1,6 @@
+This is a simple example that shows how you can build an application suite
+that consists of single Windows targets that still uses libglade. You should
+probably consider migrating to gtk.Builder, but this shows it is still
+possible to use libglade if you really need to.
+
+To get this example working, simply execute setup.py.

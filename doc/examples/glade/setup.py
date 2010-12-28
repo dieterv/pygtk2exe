@@ -23,7 +23,8 @@ test = Windows(suite,
                version = '0.0.1',
                description = 'Test Application',
                url = 'http://localhost/Test/',
-               script = 'test.py')
+               script = 'test.py',
+               data_files = [('bin', ['test.glade'])])
 
 
 options = {'pygtk2exe': {'includes': ['pygtk']}}

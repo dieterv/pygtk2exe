@@ -31,9 +31,7 @@ cli = Console(suite,
               description = 'FooBar Administration Tool',
               url = 'http://localhost/FooBar/Cli',
               script = 'bin/cli.py',
-              icon_resources = [(1, "share/foobar/system-run.ico")],
-              data_files = [('bin', ['bin/cli.exe.manifest'])]
-              )
+              icon_resources = [(1, "share/foobar/system-run.ico")])
 
 bar = Windows(suite,
               name = 'bar',
@@ -41,9 +39,7 @@ bar = Windows(suite,
               description = 'Bar Application',
               url = 'http://localhost/FooBar/Bar',
               script = 'bin/bar.py',
-              icon_resources = [(1, "share/foobar/system-run.ico")],
-              data_files = [('bin', ['bin/bar.exe.manifest'])]
-              )
+              icon_resources = [(1, "share/foobar/system-run.ico")])
 
 foo = Windows(suite,
               name = 'foo',
@@ -51,17 +47,15 @@ foo = Windows(suite,
               description = 'Foo Application',
               url = 'http://localhost/FooBar/Foo',
               script = 'bin/foo.py',
-              icon_resources = [(1, "share/foobar/system-run.ico")],
-              data_files = [('bin', ['bin/foo.exe.manifest'])]
-              )
+              icon_resources = [(1, "share/foobar/system-run.ico")])
 
 
 #options = {"py2exe": {'dist_dir': 'dist',
-#                      'packages': 'foobar',
-#                      'includes': 'gtk, gobject, glib, gio, cairo, pango, pangocairo, atk',
-#                      'dll_excludes': 'w9xpopen.exe'}}
+#                      'packages': 'foobar'}
+options = {'pygtk2exe': {'includes': ['pygtk']}}
 
 
 if __name__ == '__main__':
     setup(ext_modules = [_cli],
-          suite = suite)
+          suite       = suite,
+          options     = options)

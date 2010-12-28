@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<glade-interface>
+  <!-- interface-requires gtk+ 2.16 -->
+  <!-- interface-naming-policy project-wide -->
+  <widget class="GtkWindow" id="window1">
+    <property name="title" translatable="yes">Window constructed from libglade</property>
+    <child>
+      <widget class="GtkLabel" id="label1">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">Hello from libglade!</property>
+      </widget>
+    </child>
+  </widget>
+</glade-interface>

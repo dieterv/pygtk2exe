@@ -1,9 +1,3 @@
-* Looks like gtk.pyd needs cairo.pyd either as a type 4 or 5 dependency (see
-  http://www.dependencywalker.com/help/html/dependency_types.htm). py2exe's
-  modulefinder does not pick that up (and neither does dependency walker).
-  Either hardcode such dependencies in pygtk2exe or figure out if it's possible
-  to make those implicit or delay load dependencies instead...
-
 * Add proper .exe.manifest files to the examples (or investigate if py2exe can generate one...)
 
 * Auto-detection of the gtk+ runtime location from PATH could use some improvements:

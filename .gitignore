@@ -7,5 +7,7 @@
 
 doc/examples/complex/build
 doc/examples/complex/dist
+doc/examples/glade/build
+doc/examples/glade/dist
 doc/examples/simple/build
 doc/examples/simple/dist

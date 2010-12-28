@@ -17,7 +17,3 @@
     > regex or glob?
     > inclusive, exclusive or both?
     > reject filters for bin/ etc/ and lib/ or trust people to not abuse this?
-
-* Maybe extend the "clean" command to do the equivalent of rm -rf build/* && rm -rf dist/*.
-  Not doing this sometimes leads to subtle bugs when writing a setup.py file that
-  uses py2exe.

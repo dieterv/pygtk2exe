@@ -3,6 +3,7 @@
 
 from distutils.dist import Distribution as _Distribution
 
+from pygtk2exe.command.clean import Clean
 from pygtk2exe.command.build_ext import BuildExt
 from pygtk2exe.targets import Extension, CtypesComServer, ComServer, Service, Windows, Console, IsapiFilter
 
@@ -22,13 +23,13 @@ class Distribution(_Distribution):
         # Initialize base class
         _Distribution.__init__(self, attrs)
 
-        # Replace the build_ext command
+        # Replace distutils commands
         self.cmdclass['build_ext'] = BuildExt
+        self.cmdclass['clean'] = Clean
 
         # Run "clean" and "py2exe" commands by default
         if not self.script_args:
-            self.script_args.append('clean')
-            self.script_args.append('py2exe')
+            self.script_args.extend(['clean', '--aggressive', 'py2exe'])
 
     def validate_keywords(self, attrs):
         # pygtk2exe takes control of all py2exe specific keywords passed to

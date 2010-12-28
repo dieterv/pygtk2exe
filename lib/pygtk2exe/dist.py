@@ -3,7 +3,7 @@
 
 from distutils.dist import Distribution as _Distribution
 
-from pygtk2exe.commands.build_ext import BuildExt
+from pygtk2exe.command.build_ext import BuildExt
 from pygtk2exe.targets import Extension, CtypesComServer, ComServer, Service, Windows, Console, IsapiFilter
 
 

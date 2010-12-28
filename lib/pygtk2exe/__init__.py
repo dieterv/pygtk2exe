@@ -23,7 +23,7 @@ if not py2exe_version == '0.6.9':
     raise ImportError('pygtk2exe requires py2exe 0.6.9 but found %s' % py2exe_version)
 
 # Replace the py2exe command.
-from pygtk2exe.commands import build_exe
+from pygtk2exe.command import build_exe
 # Replace distutils' Distribution class
 from pygtk2exe import dist
 

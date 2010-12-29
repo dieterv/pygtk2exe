@@ -29,7 +29,7 @@ class Distribution(_Distribution):
 
         # Run "clean" and "py2exe" commands by default
         if not self.script_args:
-            self.script_args.extend(['clean', '--aggressive', 'py2exe'])
+            self.script_args.extend(['clean', '--all', 'py2exe'])
 
     def validate_keywords(self, attrs):
         # pygtk2exe takes control of all py2exe specific keywords passed to

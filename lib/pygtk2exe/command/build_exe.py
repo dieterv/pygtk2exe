@@ -5,6 +5,8 @@ import os
 
 from copy import copy
 
+from distutils.util import get_platform
+
 from py2exe.build_exe import py2exe as _py2exe
 from py2exe.py2exe_util import depends
 
@@ -12,6 +14,23 @@ from py2exe.py2exe_util import depends
 class PyGtk2Exe(_py2exe):
     def __init__(self, dist):
         _py2exe.__init__(self, dist)
+
+    def initialize_options(self):
+        _py2exe.initialize_options(self)
+
+        self.plat_name = None
+
+    def finalize_options(self):
+        _py2exe.finalize_options(self)
+
+        self.set_undefined_options('bdist', ('plat_name', 'plat_name'))
+
+    def run(self):
+        # prevent py2exe from clobbering the dist dir
+        exe_dist_dir = "%s.%s" % (self.distribution.get_fullname(), self.plat_name)
+        self.dist_dir = os.path.join(self.dist_dir, exe_dist_dir)
+
+        _py2exe.run(self)
 
     def copy_dlls(self, dlls):
         '''

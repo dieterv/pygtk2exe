@@ -3,8 +3,9 @@
 
 from distutils.dist import Distribution as _Distribution
 
-from pygtk2exe.command.clean import Clean
-from pygtk2exe.command.build_ext import BuildExt
+from pygtk2exe.command.clean import clean
+from pygtk2exe.command.build_ext import build_ext
+from pygtk2exe.command.build_exe import py2exe
 from pygtk2exe.targets import Extension, CtypesComServer, ComServer, Service, Windows, Console, IsapiFilter
 
 
@@ -24,8 +25,9 @@ class Distribution(_Distribution):
         _Distribution.__init__(self, attrs)
 
         # Replace distutils commands
-        self.cmdclass['build_ext'] = BuildExt
-        self.cmdclass['clean'] = Clean
+        self.cmdclass['clean'] = clean
+        self.cmdclass['build_ext'] = build_ext
+        self.cmdclass['py2exe'] = py2exe
 
         # Run "clean" and "py2exe" commands by default
         if not self.script_args:

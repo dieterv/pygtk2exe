@@ -5,13 +5,13 @@ import os
 
 from copy import copy
 
-from distutils.util import get_platform
-
 from py2exe.build_exe import py2exe as _py2exe
 from py2exe.py2exe_util import depends
 
 
-class PyGtk2Exe(_py2exe):
+class py2exe(_py2exe):
+    description = 'create a self-contained executable package for MS Windows'
+
     def __init__(self, dist):
         _py2exe.__init__(self, dist)
 
@@ -167,8 +167,3 @@ class PyGtk2Exe(_py2exe):
                                     os.makedirs(dstdir)
 
                                 self.copy_file(src, dst, preserve_mode=False, preserve_times=True)
-
-
-# Replace py2exe.build_exe.py2exe with our own PyGtk2Exe class
-import py2exe
-py2exe.build_exe.py2exe = PyGtk2Exe

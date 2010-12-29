@@ -3,12 +3,12 @@
 
 import os
 
-from dsextras import BuildExt as _BuildExt
+from dsextras import BuildExt as _build_ext
 
 
-class BuildExt(_BuildExt):
+class build_ext(_build_ext):
     def run(self):
-        _BuildExt.run(self)
+        _build_ext.run(self)
 
         # This makes sure py2exe can locate the extension we've built
         build_lib = os.path.abspath(self.build_lib)

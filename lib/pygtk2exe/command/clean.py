@@ -5,24 +5,24 @@ import os
 
 from distutils import log
 from distutils.dir_util import remove_tree
-from distutils.command.clean import clean as _Clean
+from distutils.command.clean import clean as _clean
 
 
-class Clean(_Clean):
+class clean(_clean):
     def initialize_options(self):
-        _Clean.initialize_options(self)
+        _clean.initialize_options(self)
 
         self.dist_dir = None
         self.plat_name = None
 
     def finalize_options(self):
-        _Clean.finalize_options(self)
+        _clean.finalize_options(self)
 
         self.set_undefined_options('bdist', ('dist_dir', 'dist_dir'),
                                             ('plat_name', 'plat_name'))
 
     def run(self):
-        _Clean.run(self)
+        _clean.run(self)
 
         if self.all:
             exe_dist_dir = "%s.%s" % (self.distribution.get_fullname(), self.plat_name)

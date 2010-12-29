@@ -159,8 +159,3 @@ class Distribution(_Distribution):
         attrs['options']['py2exe'] = {'dll_excludes': 'w9xpopen.exe',
                                       'ignores': ignores,
                                       'includes': includes}
-
-
-# Replace distutils.core.Distribution with our own Distribution class
-import distutils
-distutils.core.Distribution = Distribution

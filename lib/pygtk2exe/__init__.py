@@ -22,13 +22,16 @@ from py2exe import __version__ as py2exe_version
 if not py2exe_version == '0.6.9':
     raise ImportError('pygtk2exe requires py2exe 0.6.9 but found %s' % py2exe_version)
 
-# Replace distutils' Distribution class
-from pygtk2exe import dist
+# Replace distutils.core.Distribution with our own Distribution class
+import distutils
+from pygtk2exe.dist import Distribution
+distutils.core.Distribution = Distribution
 
 # Keep our "namespace" clean
 del warnings
 del py2exe_version
-del dist
+del distutils
+del Distribution
 
 # Make everything usable in setup.py scripts available
 from pygtk2exe.targets import Suite, Extension, CtypesComServer, ComServer, Service, Windows, Console, IsapiFilter

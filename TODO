@@ -2,16 +2,6 @@
     > use distutils.spanw.find_executable() ?
     > ???
 
-* Not sure yet about py2exe options. I'm strongly leaning towards giving pygtk2exe
-  complete control over this dict, limiting py2exe to a "known good configuration".
-  Especially viewing how much incomplete and erroneous information has been spread
-  in the past... We could then add support for more "exotic" options if there's
-  sufficient interest and it's proven to work. Hey, maybe we can even gain extra
-  contributors this way :)
-
-    > If we decide to do this, we need to pass useful options from pygtk2exe to
-      py2exe. An incomplete list: dist_dir, includes, packages, ???
-
 * Provide a "filter", so it becomes possible to filter out for example
   share/locale/whetever_languages_we_dont_need.
     > regex or glob?

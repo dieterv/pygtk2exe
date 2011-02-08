@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
 
-from __future__ import absolute_import
-
-
 __all__ = ['Suite', 'Extension', 'CtypesComServer', 'ComServer', 'Service', 'Windows', 'Console', 'IsapiFilter']
 __version__ = '0.0.1'
 
@@ -27,11 +24,11 @@ import distutils
 from pygtk2exe.dist import Distribution
 distutils.core.Distribution = Distribution
 
+# Make everything usable in setup.py scripts available
+from pygtk2exe.targets import CtypesComServer, ComServer, Service, Windows, Console, IsapiFilter
+
 # Keep our "namespace" clean
 del warnings
 del py2exe_version
 del distutils
 del Distribution
-
-# Make everything usable in setup.py scripts available
-from pygtk2exe.targets import Suite, Extension, CtypesComServer, ComServer, Service, Windows, Console, IsapiFilter

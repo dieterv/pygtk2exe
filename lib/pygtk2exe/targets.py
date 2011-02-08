@@ -3,40 +3,10 @@
 
 from os.path import basename, splitext
 
-from distutils.extension import Extension as _Extension
-
-
-class Suite(object):
-    def __init__(self, **kw):
-        self.__dict__.update(kw)
-
-        self.targets = []
-
-    def add(self, target):
-        if not target in self.targets:
-            self.targets.append(target)
-
-
-class Extension(_Extension):
-    def __init__(self, suite, *args, **kwargs):
-        assert isinstance(suite, Suite)
-        self.suite = suite
-
-        # Add this target to the suite
-        self.suite.add(self)
-
-        _Extension.__init__(self, *args, **kwargs)
-
 
 class _Target(object):
-    def __init__(self, suite, **kwargs):
+    def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
-
-        assert isinstance(suite, Suite)
-        self.suite = suite
-
-        # Add this target to the suite
-        self.suite.add(self)
 
         # All generated executables will live in the bin directory to
         # ensure dll files are found where the GTK+ runtime has placed them.

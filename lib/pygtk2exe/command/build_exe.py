@@ -5,8 +5,15 @@ import os
 
 from copy import copy
 
+from distutils.extension import Extension
+
 from py2exe.build_exe import py2exe as _py2exe
 from py2exe.py2exe_util import depends
+from pygtk2exe.targets import CtypesComServer, ComServer, Service, Windows, Console, IsapiFilter
+
+
+class ConfigurationError(Exception):
+    pass
 
 
 class py2exe(_py2exe):
@@ -25,11 +32,35 @@ class py2exe(_py2exe):
 
         self.set_undefined_options('bdist', ('plat_name', 'plat_name'))
 
-    def run(self):
+    def _initialize_distribution(self):
         # prevent py2exe from clobbering the dist dir
         exe_dist_dir = "%s.%s" % (self.distribution.get_fullname(), self.plat_name)
         self.dist_dir = os.path.join(self.dist_dir, exe_dist_dir)
 
+        # Merge data_files for each Target into the data_files keyword
+        targets = self.distribution.ctypes_com_server + \
+                  self.distribution.com_server + \
+                  self.distribution.service + \
+                  self.distribution.windows + \
+                  self.distribution.console + \
+                  self.distribution.isapi
+
+        for target in targets:
+            if hasattr(target, 'data_files'):
+                targetdirs = [x[0] for x in self.distribution.data_files]
+
+                for (targetdir, files) in target.data_files:
+                    if not targetdir in targetdirs:
+                        self.distribution.data_files.append((targetdir, files))
+                    else:
+                        for file in files:
+                            index = targetdirs.index(targetdir)
+
+                            if not file in self.distribution.data_files[index]:
+                                self.distribution.data_files[index][1].append(file)
+
+    def run(self):
+        self._initialize_distribution()
         _py2exe.run(self)
 
     def copy_dlls(self, dlls):

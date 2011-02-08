@@ -6,7 +6,6 @@ from distutils.dist import Distribution as _Distribution
 from pygtk2exe.command.clean import clean
 from pygtk2exe.command.build_ext import build_ext
 from pygtk2exe.command.build_exe import py2exe
-from pygtk2exe.targets import Extension, CtypesComServer, ComServer, Service, Windows, Console, IsapiFilter
 
 
 class ConfigurationError(Exception):
@@ -33,72 +32,39 @@ class Distribution(_Distribution):
         # pygtk2exe takes control of all py2exe specific keywords passed to
         # the setup function, so we raise an error if the user mistakenly passes
         # one of those keywords along with his setup() function call.
-        if not attrs.has_key('suite'):
-            raise ConfigurationError('pygtk2exe expects you to configure a suite')
-
         if attrs.has_key('zipfile'):
             raise ConfigurationError('The "zipfile" keyword should not be passed '
                                      'directly to your setup() function. This will '
                                      'be automatically configured by pygtk2exe.')
 
-        keywords = ['ctypes_com_server', 'com_server', 'service', 'windows', 'console', 'isapi']
-
-        for keyword in keywords:
-            if attrs.has_key(keyword):
-                raise ConfigurationError('The "%s" keyword should not be passed '
-                                         'directly to your setup() function. Please '
-                                         'use the pygtk2exe provided alternative.' % keyword)
-
     def set_keywords(self, attrs):
-        self.suite = attrs.pop('suite')
-
-        # Merge data_files for each Target into the data_files keyword
-        if attrs.has_key('data_files'):
-            data_files = attrs.pop('data_files')
-        else:
-            data_files = []
-
-        for target in self.suite.targets:
-            if hasattr(target, 'data_files'):
-                targetdirs = [x[0] for x in data_files]
-
-                for (targetdir, files) in target.data_files:
-                    if not targetdir in targetdirs:
-                        data_files.append((targetdir, files))
-                    else:
-                        for file in files:
-                            index = targetdirs.index(targetdir)
-
-                            if not file in data_files[index]:
-                                data_files[index][1].append(file)
-
-        attrs['data_files'] = data_files
+        if not attrs.has_key('data_files'):
+            attrs['data_files'] = []
 
         # py2exe specific keywords
         self.zipfile = 'bin/library.zip'
-        self.ext_modules = []
-        self.ctypes_com_server = []
-        self.com_server = []
-        self.service = []
-        self.windows = []
-        self.console = []
-        self.isapi = []
 
-        for target in self.suite.targets:
-            if isinstance(target, Extension):
-                self.ext_modules.append(target),
-            elif isinstance(target, CtypesComServer):
-                self.ctypes_com_server.append(target)
-            elif isinstance(target, ComServer):
-                self.com_server.append(target)
-            elif isinstance(target, Service):
-                self.service.append(target)
-            elif isinstance(target, Windows):
-                self.windows.append(target)
-            elif isinstance(target, Console):
-                self.console.append(target)
-            elif isinstance(target, IsapiFilter):
-                self.isapi.append(target)
+        if not hasattr(self, 'ext_modules'):
+            self.ext_modules = []
+
+        if not hasattr(self, 'ctypes_com_server'):
+            self.ctypes_com_server = []
+
+        if not hasattr(self, 'com_server'):
+            self.com_server = []
+
+        if not hasattr(self, 'service'):
+            self.service = []
+
+        if not hasattr(self, 'windows'):
+            self.windows = []
+
+        if not hasattr(self, 'console'):
+            self.console = []
+
+        if not hasattr(self, 'isapi'):
+            self.isapi = []
+
 
     def validate_options(self, attrs):
         '''
@@ -108,10 +74,6 @@ class Distribution(_Distribution):
         call.
         '''
         if attrs.has_key('options'):
-            if attrs['options'].has_key('py2exe'):
-                raise ConfigurationError('The "options" keyword should not contain '
-                                         'py2exe options. Use pygtk2exe options instead.')
-
             if not attrs['options'].has_key('pygtk2exe'):
                 raise ConfigurationError('The "options" keyword should at least contain the '
                                          'pygtk2exe "includes" option, specifying either '

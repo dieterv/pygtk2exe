@@ -3,4 +3,5 @@ that consists of single Windows targets that still uses libglade. You should
 probably consider migrating to gtk.Builder, but this shows it is still
 possible to use libglade if you really need to.
 
-To get this example working, simply execute setup.py.
+To get this example working, simply execute:
+$ python setup.py clean --all py2exe

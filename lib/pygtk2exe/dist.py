@@ -29,10 +29,6 @@ class Distribution(_Distribution):
         self.cmdclass['build_ext'] = build_ext
         self.cmdclass['py2exe'] = py2exe
 
-        # Run "clean" and "py2exe" commands by default
-        if not self.script_args:
-            self.script_args.extend(['clean', '--all', 'py2exe'])
-
     def validate_keywords(self, attrs):
         # pygtk2exe takes control of all py2exe specific keywords passed to
         # the setup function, so we raise an error if the user mistakenly passes

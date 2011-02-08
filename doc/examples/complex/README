@@ -3,5 +3,9 @@ that consists of two Windows targets (bar.exe and foo.exe) and a Console
 target (cli.exe) that uses a Python c Extension (_cli.pyd).
 
 To get this example working, you'll either need to:
-    - run this example from a working msys bash console (this is the default)
-    - reconfigure setup.cfg to use some microsoft compiler
+    - run this example from an MSys bash console with a
+      working MinGW gcc (this is the default)
+    - reconfigure setup.cfg to use some Microsoft compiler
+
+Then simply execute:
+$ python setup.py clean --all py2exe

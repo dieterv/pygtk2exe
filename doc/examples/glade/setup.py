@@ -20,7 +20,6 @@ test = Windows(name = 'test',
                url = 'http://localhost/Test/',
                author = 'Monty Python <monty.python@localhost.localnet>',
                company_name = 'Monty Corporation',
-               license = 'GPLv3',
                script = 'test.py',
                data_files = [('bin', ['test.glade'])])
 
@@ -28,16 +27,16 @@ test = Windows(name = 'test',
 options = {'pygtk2exe': {'includes': ['pygtk']}}
 
 
-setup(name         = 'glade-example',
-      version      = '0.0.1',
-      description  = 'pygtk2exe example using libglade',
-      author       = 'Monty Python',
-      license      = 'GPLv3',
-      classifiers  = ['Development Status :: 1 - Planning',
+setup(name = 'glade-example',
+      version = '0.0.1',
+      description = 'pygtk2exe example using libglade',
+      author = 'Monty Python',
+      license = 'GPLv3',
+      classifiers = ['Development Status :: 1 - Planning',
                       'Environment :: X11 Applications :: GTK',
                       'Intended Audience :: Developers',
-                      'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
                       'Programming Language :: Python',
                       'Topic :: Software Development :: Libraries :: Python Modules'],
-      windows      = [test],
-      options      = options)
+      windows = [test],
+      options = options
+      )

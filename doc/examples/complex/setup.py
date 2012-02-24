@@ -50,14 +50,13 @@ setup(name         = 'complex example',
       version      = '0.0.1',
       description  = 'complex pygtk2exe example',
       author       = 'Monty Python',
-      license      = 'GPLv3',
       classifiers  = ['Development Status :: 1 - Planning',
                       'Environment :: X11 Applications :: GTK',
                       'Intended Audience :: Developers',
-                      'License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)',
                       'Programming Language :: Python',
                       'Topic :: Software Development :: Libraries :: Python Modules'],
       ext_modules = [_cli],
       console     = [cli],
       windows     = [bar, foo],
-      options     = options)
+      options     = options
+      )

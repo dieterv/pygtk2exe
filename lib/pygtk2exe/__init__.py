@@ -36,8 +36,12 @@ from py2exe import __version__ as py2exe_version
 if not py2exe_version == '0.6.9':
     raise ImportError('pygtk2exe requires py2exe 0.6.9 but found %s' % py2exe_version)
 
-# Replace distutils.core.Distribution with our own Distribution class
 import distutils
+
+# Replace distutils.cygwincompiler.Mingw32CCompiler with our own Mingw32CCompiler class
+from pygtk2exe.cygwinccompiler import Mingw32CCompiler
+distutils.cygwinccompiler.Mingw32CCompiler = Mingw32CCompiler
+# Replace distutils.core.Distribution with our own Distribution class
 from pygtk2exe.dist import Distribution
 distutils.core.Distribution = Distribution
 

@@ -37,7 +37,7 @@ class py2exe(_py2exe):
         exe_dist_dir = "%s.%s" % (self.distribution.get_fullname(), self.plat_name)
         self.dist_dir = os.path.join(self.dist_dir, exe_dist_dir)
 
-        # Merge data_files for each Target into the data_files keyword
+        # Merge data_files for each target into the data_files keyword
         targets = self.distribution.ctypes_com_server + \
                   self.distribution.com_server + \
                   self.distribution.service + \
@@ -69,6 +69,11 @@ class py2exe(_py2exe):
         This is where the magic happens :)
         '''
 
+        manifestdata = {}   # complete GTK+ runtime manifest data
+        gtk_manifests = []  # manifests to copy to our distribution
+        gtk_dlls = []       # dlls that belong to the GTK+ runtime
+        extra_dlls = []     # gtk_dlls depends on these extra dlls
+
         print '*** collecting GTK+ runtime dependencies ***'
 
         # Where does the GTK+ runtime live?
@@ -86,8 +91,6 @@ class py2exe(_py2exe):
             raise SystemExit('Error: No suitable GTK+ runtime has been found.')
 
         # Collect GTK+ runtime manifest data
-        manifestdata = {}
-
         for root, dirs, files in os.walk(gtk_manifestdir):
             for manifestfile in files:
                 # Get .exe and .dll files from this package
@@ -107,8 +110,6 @@ class py2exe(_py2exe):
                 manifestdata[manifestfile] = manifest_dlls
 
         # Get dlls that belong to the GTK+ runtime
-        gtk_dlls = []
-
         for dll in copy(dlls):
             dllfile = os.path.abspath(dll)
             dllfilename = os.path.basename(dllfile)
@@ -121,8 +122,6 @@ class py2exe(_py2exe):
                 gtk_dlls.append(dllfilename)
 
         # Match GTK+ dlls to manifests
-        gtk_manifests = []
-
         for manifest, value in manifestdata.iteritems():
             for dirname, filename in value:
                 if filename in gtk_dlls:
@@ -131,8 +130,6 @@ class py2exe(_py2exe):
 
         # Get extra dependencies for .dll and .exe files included in the manifest
         # files we collected above
-        extra_dlls = []
-
         for manifest, value in manifestdata.iteritems():
             if manifest in gtk_manifests:
                 for dirname, filename in value:
@@ -145,7 +142,7 @@ class py2exe(_py2exe):
                             if not dllfilename in gtk_dlls and not dllfilename in extra_dlls:
                                 extra_dlls.append(dllfilename)
 
-        # Match extra dlls to manifests
+        # Match extra dependencies to manifests
         extra_manifests = []
 
         for manifest, value in manifestdata.iteritems():
@@ -186,7 +183,6 @@ class py2exe(_py2exe):
                     if not dirname in done:
                         done.append(dirname)
 
-                        # TODO: Does not do a recursive copy...
                         for filename in os.listdir(os.path.join(gtk_root, dirname)):
                             src = os.path.join(gtk_root, dirname, filename)
 

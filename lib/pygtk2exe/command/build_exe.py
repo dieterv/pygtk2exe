@@ -21,6 +21,7 @@
 import os
 
 from copy import copy
+from win32api import GetSystemDirectory
 
 from py2exe.build_exe import py2exe as _py2exe
 from py2exe.py2exe_util import depends
@@ -171,7 +172,19 @@ class py2exe(_py2exe):
 
         gtk_manifests.extend(extra_manifests)
 
-        # Let py2exe copy dll files not handles by pygtk2exe
+        # py2exe picks up loads of Windows 7 system dll files which we don't
+        # want to be included with our distribution, so filter them out while
+        # carefully allowing python related dll files (wtf are those doing in
+        # the system directory?!?)
+        for dll in copy(dlls):
+            if dll.lower().split(os.sep)[-1].startswith('py'):
+                continue
+
+            if dll.lower().startswith(GetSystemDirectory().lower()):
+                dlls.remove(dll)
+
+        # only now py2exe can copy whatever dll files remain which are
+        # not handled by pygtk2exe
         _py2exe.copy_dlls(self, dlls)
 
         # Finally, copy GTK+ dependencies

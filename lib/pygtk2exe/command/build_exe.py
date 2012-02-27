@@ -5,11 +5,8 @@ import os
 
 from copy import copy
 
-from distutils.extension import Extension
-
 from py2exe.build_exe import py2exe as _py2exe
 from py2exe.py2exe_util import depends
-from pygtk2exe.targets import CtypesComServer, ComServer, Service, Windows, Console, IsapiFilter
 
 
 class ConfigurationError(Exception):

@@ -4,6 +4,7 @@
 
 import os
 import sys
+import re
 
 
 # Ensure this example can be used when pygtk2exe is not installed on the system
@@ -43,7 +44,16 @@ foo = Windows(name = 'foo',
               icon_resources = [(1, "share/foobar/system-run.ico")])
 
 
-options = {'pygtk2exe': {'includes': ['pygtk']}}
+# Let's pretend that:
+#   - We need librsvg for something that the dependency scanner didn't pick up
+#     for some reason. For this demo code, it's not needed at all, so it's
+#     a fine example :) Note how we are not required to specify the dependencies
+#     of librsvg, they get picked up by the dependency scanner just fine.
+#   - The distribution is going to be used in Belgium only, so we're only
+#     interested in distributing French, Dutch and German locale files.
+options = {'pygtk2exe': {'includes': ['pygtk'],
+                         'extra_packages': ['librsvg_2.32.1-1_win32.mft'],
+                         'filter_paths': {'share/locale': re.compile('^share/locale/(de|fr|nl)')}}}
 
 
 setup(name         = 'complex example',

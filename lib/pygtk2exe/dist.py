@@ -108,7 +108,20 @@ class Distribution(_Distribution):
 
     def set_options(self, attrs):
         # includes
-        includes = attrs['options']['pygtk2exe']['includes']
+        try:
+            includes = attrs['options']['pygtk2exe']['includes']
+        except KeyError:
+            includes = []
+
+        try:
+            extra_packages = attrs['options']['pygtk2exe']['extra_packages']
+        except KeyError:
+            extra_packages = []
+
+        try:
+            filter_paths = attrs['options']['pygtk2exe']['filter_paths']
+        except KeyError:
+            filter_paths = {}
 
         if 'pygobject' in includes:
             includes.remove('pygobject')
@@ -133,4 +146,6 @@ class Distribution(_Distribution):
         # Construct and return options dict
         attrs['options']['py2exe'] = {'dll_excludes': 'w9xpopen.exe',
                                       'ignores': ignores,
-                                      'includes': includes}
+                                      'includes': includes,
+                                      'extra_packages': extra_packages,
+                                      'filter_paths': filter_paths}

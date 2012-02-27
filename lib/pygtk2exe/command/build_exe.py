@@ -27,6 +27,16 @@ from py2exe.build_exe import py2exe as _py2exe
 from py2exe.py2exe_util import depends
 
 
+# copied from py2exe's build_exe.py
+def _fancy_split(str, sep=","):
+    # a split which also strips whitespace from the items
+    # passing a list or tuple will return it unchanged
+    if str is None:
+        return []
+    if hasattr(str, "split"):
+        return [item.strip() for item in str.split(sep)]
+    return str
+
 class ConfigurationError(Exception):
     pass
 
@@ -41,11 +51,15 @@ class py2exe(_py2exe):
         _py2exe.initialize_options(self)
 
         self.plat_name = None
+        self.extra_packages = []
+        self.filter_paths = {}
 
     def finalize_options(self):
         _py2exe.finalize_options(self)
 
         self.set_undefined_options('bdist', ('plat_name', 'plat_name'))
+        self.extra_packages = _fancy_split(self.extra_packages)
+        self.filter_paths = self.filter_paths
 
     def _initialize_distribution(self):
         # prevent py2exe from clobbering the dist dir
@@ -143,6 +157,11 @@ class py2exe(_py2exe):
                     if not manifest in gtk_manifests:
                         gtk_manifests.append(manifest)
 
+        # Add extra runtime packages requested by the user before we
+        # search for extra dependencies
+        for manifest in self.extra_packages:
+            gtk_manifests.append(os.path.join(gtk_manifestdir, manifest))
+
         # Get extra dependencies for .dll and .exe files included in the manifest
         # files we collected above
         for manifest, value in manifestdata.iteritems():
@@ -192,13 +211,22 @@ class py2exe(_py2exe):
 
         for manifest in gtk_manifests:
             for dirname, filename in manifestdata[manifest]:
-                src = os.path.join(gtk_root, dirname, filename)
-                dst = os.path.join(self.dist_dir, dirname, filename)
-                dstdir = os.path.join(self.dist_dir, dirname)
+                ignore_path = False
+                # do we have a filter applied to this path?
+                for filter in self.filter_paths.keys():
+                    if dirname.startswith(filter):
+                        # check filter
+                        if not self.filter_paths[filter].match('%s/%s' % (dirname, filename)):
+                            ignore_path = True
+                if ignore_path:
+                    continue
 
+                dstdir = os.path.join(self.dist_dir, dirname)
                 if not os.path.isdir(dstdir):
                     os.makedirs(dstdir)
 
+                src = os.path.join(gtk_root, dirname, filename)
+                dst = os.path.join(self.dist_dir, dirname, filename)
                 self.copy_file(src, dst, preserve_mode=False, preserve_times=True)
 
             # TODO: Not sure if the following is ideal. But we cannot rely on the

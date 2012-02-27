@@ -1,9 +1,3 @@
 * Auto-detection of the gtk+ runtime location from PATH could use some improvements:
     > use distutils.spanw.find_executable() ?
     > ???
-
-* Provide a "filter", so it becomes possible to filter out for example
-  share/locale/whetever_languages_we_dont_need.
-    > regex or glob?
-    > inclusive, exclusive or both?
-    > reject filters for bin/ etc/ and lib/ or trust people to not abuse this?

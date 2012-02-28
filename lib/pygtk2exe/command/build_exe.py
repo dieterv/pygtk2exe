@@ -21,10 +21,10 @@
 import os
 
 from copy import copy
-from win32api import GetSystemDirectory
 
 from py2exe.build_exe import py2exe as _py2exe
 from py2exe.py2exe_util import depends
+from pygtk2exe.win32 import winbase
 
 
 # copied from py2exe's build_exe.py
@@ -36,6 +36,7 @@ def _fancy_split(str, sep=","):
     if hasattr(str, "split"):
         return [item.strip() for item in str.split(sep)]
     return str
+
 
 class ConfigurationError(Exception):
     pass
@@ -199,7 +200,7 @@ class py2exe(_py2exe):
             if dll.lower().split(os.sep)[-1].startswith('py'):
                 continue
 
-            if dll.lower().startswith(GetSystemDirectory().lower()):
+            if dll.lower().startswith(winbase.GetSystemDirectory().lower()):
                 dlls.remove(dll)
 
         # only now py2exe can copy whatever dll files remain which are
